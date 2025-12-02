@@ -14,7 +14,7 @@ public class BlockTimerScreen extends Screen{
     private static final int ELEMENT_HEIGHT = 20;
     private static final int ELEMENT_SPACING = 10;
     private static final int BUTTON_WIDTH = 100;
-    private BlockPos pos;
+    private final BlockPos pos;
 
     public BlockTimerScreen(BlockPos pos) {
         super(Text.of(BrewTimers.MOD_ID + " TimerScreen"));
@@ -33,7 +33,10 @@ public class BlockTimerScreen extends Screen{
         int closeButtonX = width - BUTTON_WIDTH - ELEMENT_SPACING;
         int closeButtonY = height - ELEMENT_HEIGHT - ELEMENT_SPACING;
         ButtonWidget closeButton = ButtonWidget.builder(
-                closeButtonTitle, button -> client.setScreen(null)
+                closeButtonTitle, button -> {
+                    assert client != null;
+                    client.setScreen(null);
+                }
         ).dimensions(closeButtonX,closeButtonY,BUTTON_WIDTH,ELEMENT_HEIGHT).build();
 
         addDrawableChild(closeButton);
@@ -92,7 +95,7 @@ public class BlockTimerScreen extends Screen{
                     if (nameField.getText().isEmpty()) {
                         assert client != null;
                         client.getToastManager().add(SystemToast.create(
-                                client, SystemToast.Type.NARRATOR_TOGGLE, Text.of("Brew Manager"), Text.of("You must set a timer name.")
+                                client, SystemToast.Type.NARRATOR_TOGGLE, Text.of("Brew Timers"), Text.of("You must set a timer name.")
                         ));
                     }
                     else {
@@ -101,7 +104,7 @@ public class BlockTimerScreen extends Screen{
                         manager.addTimer(pos, new BlockTimer(nameField.getText(), UTC));
                         assert client != null;
                         client.getToastManager().add(SystemToast.create(
-                                client, SystemToast.Type.NARRATOR_TOGGLE, Text.of("Brew Manager"), Text.of("Timer added!")
+                                client, SystemToast.Type.NARRATOR_TOGGLE, Text.of("Brew Timers"), Text.of("Timer added!")
                         ));
                         client.setScreen(null);
                     }
@@ -123,7 +126,7 @@ public class BlockTimerScreen extends Screen{
                 clearButtonTitle, button -> {
                     BlockTimerManager.getInstance().clear();
                     client.getToastManager().add(SystemToast.create(
-                            client, SystemToast.Type.NARRATOR_TOGGLE, Text.of("Brew Manager"), Text.of("Timers cleared.")
+                            client, SystemToast.Type.NARRATOR_TOGGLE, Text.of("Brew Timers"), Text.of("Timers cleared.")
                     ));
                 }
         ).dimensions(closeButtonX,closeButtonY,BUTTON_WIDTH,ELEMENT_HEIGHT).build();
