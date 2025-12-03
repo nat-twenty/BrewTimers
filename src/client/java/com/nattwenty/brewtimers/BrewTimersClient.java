@@ -14,7 +14,6 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
@@ -85,8 +84,6 @@ public class BrewTimersClient implements ClientModInitializer {
         Vec3d OFFSET = new Vec3d(0.0, 0.75, 0.0);
         AtomicInteger timers_added = new AtomicInteger();
 
-        Style style = Style.EMPTY;
-
         HashMap<BlockPos, BlockTimer> brew_timers = BlockTimerManager.getInstance().getBrewTimers();
 
         brew_timers.forEach((pos, blockTimer) -> {
@@ -94,6 +91,7 @@ public class BrewTimersClient implements ClientModInitializer {
             Vec3d text_pos = pos.toCenterPos().add(OFFSET);
             Vector3f forward_V = client.gameRenderer.getCamera().getRotation().transform(new Vector3f(0f,0f,-1f)).normalize();
 
+            assert client.getCameraEntity() != null;
             Vec3d eye_pos = client.getCameraEntity().getEyePos();
             double distance = eye_pos.distanceTo(text_pos);
 
@@ -109,9 +107,9 @@ public class BrewTimersClient implements ClientModInitializer {
             double completed = elapsed / Math.max(timer_length, 0.01);
             int progress_color = ColorHelper.lerp((float) completed, 0xFFFF0000, 0xFF00FF00);
 
-            int timer_color = 0xFFFFFFFF;
-            String timer = "";
-            int time_width = 0;
+            int timer_color;
+            String timer;
+            int time_width;
 
             String text = blockTimer.getTimerName();
             int width = client.textRenderer.getWidth(text);
