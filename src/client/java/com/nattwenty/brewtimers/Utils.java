@@ -3,10 +3,8 @@ package com.nattwenty.brewtimers;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec3d;
-import org.jetbrains.annotations.ApiStatus;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -14,13 +12,6 @@ import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 
 public class Utils {
-    @ApiStatus.Internal
-    public static final Matrix4f lastProjMat = new Matrix4f();
-    @ApiStatus.Internal
-    public static final Matrix4f lastModMat = new Matrix4f();
-    @ApiStatus.Internal
-    public static final Matrix4f lastWorldSpaceMatrix = new Matrix4f();
-    @ApiStatus.Internal
     public static final int[] lastViewport = new int[4];
 
     public static Vec3d worldSpaceToScreenSpace(Vec3d pos) {
@@ -29,6 +20,7 @@ public class Utils {
         int displayHeight = client.getWindow().getHeight();
         Vector3f target = new Vector3f();
 
+        assert camera != null;
         double deltaX = pos.x - camera.getPos().x;
         double deltaY = pos.y - camera.getPos().y;
         double deltaZ = pos.z - camera.getPos().z;
