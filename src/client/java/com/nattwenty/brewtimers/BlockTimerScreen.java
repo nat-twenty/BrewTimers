@@ -101,7 +101,7 @@ public class BlockTimerScreen extends Screen{
                     }
                     else {
 
-                        Long UTC = Instant.now().getEpochSecond() + H * 360L + M * 60L + S;
+                        Long UTC = Instant.now().getEpochSecond() + H * 3600L + M * 60L + S;
                         BlockTimerManager manager = BlockTimerManager.getInstance();
                         manager.addTimer(pos, new BlockTimer(nameField.getText(), UTC));
                         assert client != null;
