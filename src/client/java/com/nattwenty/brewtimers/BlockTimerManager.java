@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.util.HashMap;
 
 public class BlockTimerManager {
-    private static BlockTimerManager instance;
+    private final static BlockTimerManager instance;
     private static HashMap<BlockPos, BlockTimer> brewtimers_timers;
 
     private BlockTimerManager() {
@@ -47,5 +47,7 @@ public class BlockTimerManager {
     public void clear() {
         brewtimers_timers.clear();
     }
+
+    public HashMap<BlockPos, BlockTimer> getBrewTimers() {return brewtimers_timers;}
 
 }
