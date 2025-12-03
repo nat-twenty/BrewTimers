@@ -53,10 +53,11 @@ public class BlockTimerScreen extends Screen{
 
         Text textFieldMessage = Text.of("Timer");
         int textFieldX = ELEMENT_SPACING;
-        int textFieldWidth = BUTTON_WIDTH * 2;
+        int textFieldWidth = textRenderer.getWidth("OOOOOOOOOOOOOOOO") + 10;
 
         TextFieldWidget nameField = new TextFieldWidget(textRenderer, textFieldX, toastBarY, textFieldWidth, ELEMENT_HEIGHT, textFieldMessage);
-        nameField.setText("Timer Name");
+        nameField.setText("Name");
+        nameField.setMaxLength(16);
 
         TextFieldWidget timeHField = new TextFieldWidget(textRenderer, textFieldX, timeBarY, timeBarWidth, ELEMENT_HEIGHT, Text.of("0"));
         timeHField.setSuggestion("H");
@@ -99,6 +100,7 @@ public class BlockTimerScreen extends Screen{
                         ));
                     }
                     else {
+
                         Long UTC = Instant.now().getEpochSecond() + H * 360L + M * 60L + S;
                         BlockTimerManager manager = BlockTimerManager.getInstance();
                         manager.addTimer(pos, new BlockTimer(nameField.getText(), UTC));

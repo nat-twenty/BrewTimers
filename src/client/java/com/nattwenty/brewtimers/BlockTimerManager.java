@@ -48,4 +48,6 @@ public class BlockTimerManager {
         brewtimers_timers.clear();
     }
 
+    public HashMap<BlockPos, BlockTimer> getBrewTimers() {return brewtimers_timers;}
+
 }
